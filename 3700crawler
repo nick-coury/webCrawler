@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 
 
 DEFAULT_SERVER = "project5.3700.network"
-DEFAULT_LOGIN = "/accounts/login/"
+DEFAULT_LOGIN = "/fakebook/accounts/login/"
 DEFAULT_PORT = 443
 
 # Nick's Login: 
@@ -45,7 +45,7 @@ class Crawler:
         return
         
 
-    def get_req (self, sock, host, path) :
+    def get_req(self, sock, host, path):
         #print("URL: %s\n" % url)
         # First parse our url
         #parsed_url = urlparse(url)
@@ -74,12 +74,13 @@ class Crawler:
         data = sock.recv(100000)
         data.decode('ascii')
 
+        print("DATA_STATUS: %s" % data["Status"])
         print("DATA WE GOT FROM A GET: %s\n" % data)
         return data
 
     
 
-    def login (sock, username, password):
+    def login(self, sock, username, password):
         # POST path_from_host HTTTP/1.1
         # Host: DEFAULT_URL
         # Cookie: COOKIE
@@ -88,8 +89,10 @@ class Crawler:
         # Content-Type: application/x-www-form-urlencoded
         on_login_page = False
         while not on_login_page:
-            loginPage = DEFAULT_SERVER #GET(LOGIN_ENDPOINT)
-            if loginPage['Status'] == str(200):
+
+            loginPage = self.get_req(sock, DEFAULT_SERVER, DEFAULT_LOGIN)
+            
+            if loginPage['Status'] == "200":
                 on_login_page = True
 
         token = loginPage['Cookies-Object']['csrftoken']
@@ -117,10 +120,18 @@ class Crawler:
         # print("SELF>PORT: %s\n" % self.port)
         mysocket.connect((self.server, self.port))
 
+        self.login()
+
+        # Start the crawl
+
+
+
+
+        
         # Send the original GET message 
-        print("DeFAULT SERVER: ", DEFAULT_SERVER)
+        # print("DeFAULT SERVER: ", DEFAULT_SERVER)
         #response = self.get_req(mysocket, DEFAULT_SERVER)
-        self.get_req(mysocket, "project5.3700.network", "/fakebook/")
+        # self.get_req(mysocket, "project5.3700.network", "/fakebook/")
         #print("RESPONSE FROM GET: %s\n" % response)
 
         # Get the HTML structure of the login page in order to get the session crf 
