@@ -60,7 +60,7 @@ class Crawler:
         #self.connect(host, DEFAULT_PORT)
 
         self.get_cookie()
-        message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n\r\n" % (url_path, DEFAULT_SERVER, self.cookie)
+        message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (url_path, DEFAULT_SERVER, self.cookie)
         print("THE GET MSG: %s" % message)
         # Sending the GET request over the previously wrapped socket 
         sock.send(message.encode())
