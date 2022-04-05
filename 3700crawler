@@ -44,29 +44,29 @@ class Crawler:
     def get_cookie(self):
         return
         
-    def get_req (self, sock, url) :
-        print("URL: %s\n" % url)
-        # First parse our url
-        parsed_url = urlparse(url)
 
-        print("PARSED URL: ", parsed_url)
-        url_path = parsed_url.path
-        print("URL_PATH: %s\n" % url_path)
+    def get_req (self, sock, host, path) :
+        #print("URL: %s\n" % url)
+        # First parse our url
+        #parsed_url = urlparse(url)
+
+        #print("PARSED URL: ", parsed_url)
+        #url_path = path
+        #print("URL_PATH: %s\n" % path)
 
         # Checking if this is the root of the Host
         # original URL: "scheme://netloc/path;parameters?query#fragment" if the path was empty then the new path needs / 
-        if(url_path == " "):
-            url_path = "/" 
+        if(path == " "):
+            path = "/" 
 
         # netloc is the root url  
         # original URL: "scheme://netloc/path;parameters?query#fragment"
-        host = parsed_url.netloc
         print("HOST: %s\n" % host)
 
         #self.connect(host, DEFAULT_PORT)
 
         self.get_cookie()
-        message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (url_path, DEFAULT_SERVER, self.cookie)
+        message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.cookie)
         print("THE GET MSG: %s" % message)
         # Sending the GET request over the previously wrapped socket 
         sock.send(message.encode())
@@ -113,8 +113,8 @@ class Crawler:
         mysocket = context.wrap_socket(mysocket, server_hostname=self.server)
 
         # Connects to the server @ port 
-        print("SELF>SERVER: %s\n" % self.server)
-        print("SELF>PORT: %s\n" % self.port)
+        # print("SELF>SERVER: %s\n" % self.server)
+        # print("SELF>PORT: %s\n" % self.port)
         mysocket.connect((self.server, self.port))
 
         # Send the original GET message 
