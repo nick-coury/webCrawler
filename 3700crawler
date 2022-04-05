@@ -5,6 +5,7 @@ import argparse, socket, ssl
 from html.parser import HTMLParser
 from urllib.parse import urlparse
 
+
 DEFAULT_SERVER = "project5.3700.network"
 DEFAULT_LOGIN = "/accounts/login/"
 DEFAULT_PORT = 443
@@ -44,7 +45,7 @@ class Crawler:
         
     def get_req (self, sock, url) :
         # First parse our url
-        parsed_url = urlparse.urlparse(url)
+        parsed_url = urlparse(url)
         url_path = parsed_url.path
         print("URL_PATH: %s\n" % url_path)
 
