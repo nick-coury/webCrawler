@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 
 
 DEFAULT_SERVER = "project5.3700.network"
-DEFAULT_LOGIN = "/fakebook/accounts/login/"
+DEFAULT_LOGIN = "/accounts/login/"
 DEFAULT_PORT = 443
 
 # Nick's Login: 
