@@ -46,6 +46,7 @@ class Crawler:
         # First parse our url
         parsed_url = urlparse(url)
         url_path = parsed_url.path
+        print("URL_PATH: %s\n" % url_path)
 
         # Checking if this is the root of the Host
         # original URL: "scheme://netloc/path;parameters?query#fragment" if the path was empty then the new path needs / 
