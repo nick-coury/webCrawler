@@ -120,7 +120,7 @@ class Crawler:
         # print("SELF>PORT: %s\n" % self.port)
         mysocket.connect((self.server, self.port))
 
-        self.login()
+        self.login(mysocket, "coury.ni", "001477153")
 
         # Start the crawl
 
