@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse, socket, ssl
+from ast import parse
 
 from html.parser import HTMLParser
 from urllib.parse import urlparse
@@ -46,6 +47,8 @@ class Crawler:
     def get_req (self, sock, url) :
         # First parse our url
         parsed_url = urlparse(url)
+
+        print("PARSED URL: " + parsed_url)
         url_path = parsed_url.path
         print("URL_PATH: %s\n" % url_path)
 
