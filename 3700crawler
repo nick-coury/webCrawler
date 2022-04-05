@@ -18,7 +18,7 @@ class Crawler:
         print("Request to %s:%d" % (self.server, self.port))
         print(request)
         mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        context = ssl.create_default_context()
+        context = ssl.SSLContext()
         mysocket = context.wrap_socket(mysocket, server_hostname=self.server)
 
         mysocket.connect((self.server, self.port))
