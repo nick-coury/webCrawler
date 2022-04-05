@@ -44,7 +44,7 @@ class Crawler:
         
     def get_req (self, sock, url) :
         # First parse our url
-        parsed_url = urlparse(url)
+        parsed_url = urlparse.urlparse(url)
         url_path = parsed_url.path
         print("URL_PATH: %s\n" % url_path)
 
