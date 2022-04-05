@@ -7,7 +7,7 @@ from html.parser import HTMLParser
 from urllib.parse import urlparse
 
 
-DEFAULT_SERVER = "project5.3700.network/"
+DEFAULT_SERVER = "project5.3700.network"
 DEFAULT_LOGIN = "/accounts/login/"
 DEFAULT_PORT = 443
 
