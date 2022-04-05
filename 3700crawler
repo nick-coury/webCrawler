@@ -96,19 +96,19 @@ class Crawler:
             # if loginPage['Status'] == "200":
             #     on_login_page = True
 
-        token = loginPage['Cookies-Object']['csrftoken']
-        session_id = loginPage['Cookies-Object']['sessionid']
+        # token = loginPage['Cookies-Object']['csrftoken']
+        # session_id = loginPage['Cookies-Object']['sessionid']
 
 
 
-        login = "POST %s HTTP/1.0\r\n" % DEFAULT_LOGIN
-        header_list = ['Content-Type: application/x-www-form-urlencoded', 'Host: ' + DEFAULT_SERVER] 
-        content = "username={username}&password={password}&crfmifflewaretoken={token}&next=%2Ffakebook%2F\r\n"
-        # Connects to the server @ port 
-        sock.connect(DEFAULT_LOGIN)
+        # login = "POST %s HTTP/1.0\r\n" % DEFAULT_LOGIN
+        # header_list = ['Content-Type: application/x-www-form-urlencoded', 'Host: ' + DEFAULT_SERVER] 
+        # content = "username={username}&password={password}&crfmifflewaretoken={token}&next=%2Ffakebook%2F\r\n"
+        # # Connects to the server @ port 
+        # sock.connect(DEFAULT_LOGIN)
 
-        # Send the original GET message 
-        sock.send(login.encode('ascii'))
+        # # Send the original GET message 
+        # sock.send(login.encode('ascii'))
     
     def run(self):      
         # Init the socket and wrap in SSL 
