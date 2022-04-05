@@ -91,9 +91,10 @@ class Crawler:
         while not on_login_page:
 
             loginPage = self.get_req(sock, DEFAULT_SERVER, DEFAULT_LOGIN)
-            
-            if loginPage['Status'] == "200":
-                on_login_page = True
+            on_login_page = True
+            # add a helper that takes in a get request and returns a dictionary 
+            # if loginPage['Status'] == "200":
+            #     on_login_page = True
 
         token = loginPage['Cookies-Object']['csrftoken']
         session_id = loginPage['Cookies-Object']['sessionid']
