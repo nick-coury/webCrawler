@@ -13,7 +13,7 @@ class Crawler:
         self.password = args.password
 
     def run(self):
-        request = "GET / HTTP/1.0\r\nConnection: Keep-Alive\r\n"
+        request = "GET / HTTP/1.0\r\nConnection: Keep-Alive\r\n\r\n"
 
         print("Request to %s:%d" % (self.server, self.port))
         print(request)
