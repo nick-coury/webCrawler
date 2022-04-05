@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 
-import argparse, socket, ssl
+import argparse, socket, ssl, html.parser, urllib.parse 
 
 DEFAULT_SERVER = "project5.3700.network"
 DEFAULT_PORT = 443
+
+# Nick's Login: 
+# username: coury.ni
+# password: 001477153
 
 class Crawler:
     def __init__(self, args):
