@@ -116,6 +116,7 @@ class Crawler:
         mysocket.connect((self.server, self.port))
 
         # Send the original GET message 
+        print("DeFAULT SERVER: ", DEFAULT_SERVER)
         response = self.get_req(mysocket, DEFAULT_SERVER)
         #self.get_req(mysocket, "project5.3700.network/fakebook")
         #print("RESPONSE FROM GET: %s\n" % response)
