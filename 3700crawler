@@ -44,7 +44,7 @@ class Crawler:
         
     def get_req (self, sock, url) :
         # First parse our url
-        parsed_url = urlparse.urlparse(url)
+        parsed_url = urlparse(url)
         url_path = parsed_url.path
 
         # Checking if this is the root of the Host
