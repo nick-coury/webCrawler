@@ -62,7 +62,7 @@ class Crawler:
         message = "GET %s HTTP/1.0\nHost: %s\n%s\r\n\r\n" % (url_path, host, self.cookie)
 
         # Sending the GET request over the previously wrapped socket 
-        sock.send(message)
+        sock.send(message.encode())
         
         data = sock.recv(100000)
         data.decode('ascii')
