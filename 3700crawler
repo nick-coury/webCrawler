@@ -30,9 +30,9 @@ class Crawler:
 
         #while not done: 
         for i in range (4) :
-            print ("[%d]" % i)
+            #print ("[%d]" % i)
             data = mysocket.recv(1000)
-            print("Response:\n%s" % data.decode('ascii'))
+            print("Response [%d]:\n%s" % i, data.decode('ascii'))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='crawl Fakebook')
