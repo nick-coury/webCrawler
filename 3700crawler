@@ -20,19 +20,33 @@ class Crawler:
         msg = "POST / HTTP/1.0\r\n "
 
     def run(self):
+        # Establishes connection
         request = "GET / HTTP/1.0\r\nConnection: keep-alive\r\n\r\n"
-
         print("Request to %s:%d" % (self.server, self.port))
         print(request)
+        print("------------\n")
+
+        # Init the socket and wrap in SSL 
         mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         context = ssl.SSLContext()
         mysocket = context.wrap_socket(mysocket, server_hostname=self.server)
 
-        # Connects to the server
+        # Connects to the server @ port 
         mysocket.connect((self.server, self.port))
 
-        # Send a POST message with the username and password 
+        # Get the HTML structure of the login page in order to get the session crf 
+        html_request = "GET / HTTP/1.0\r\nConnection: keep-alive\r\n\r\n"
+        print("HTML request to %s:%d" % (self.server, self.port))
+        print(html_request)
+        print("------------\n")
 
+        # Get the HTML request response 
+        data = mysocket.recv(1000)
+        print("HTML response:\n%s" % data.decode('ascii'))
+        print("------------\n")
+
+        # Send a POST message with the username and password 
+        #post_msg = self.gen_post_msg(self.username, self.password, token)
          
         mysocket.send(request.encode('ascii'))
 
