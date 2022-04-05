@@ -50,7 +50,7 @@ class Crawler:
 
         # Checking if this is the root of the Host
         # original URL: "scheme://netloc/path;parameters?query#fragment" if the path was empty then the new path needs / 
-        if(url_path == ""):
+        if(url_path == " "):
             url_path = "/" 
 
         # netloc is the root url  
