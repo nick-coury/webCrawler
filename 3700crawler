@@ -35,7 +35,7 @@ class Crawler:
         mysocket.connect((self.server, self.port))
 
         # Get the HTML structure of the login page in order to get the session crf 
-        html_request = "GET / HTTP/1.0\r\nConnection: keep-alive\r\n\r\n"
+        html_request = "GET / HTTP/1.0\r\n\r\n"
         print("HTML request to %s:%d" % (self.server, self.port))
         print(html_request)
         print("------------\n")
