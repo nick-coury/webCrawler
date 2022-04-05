@@ -21,7 +21,7 @@ class Crawler:
 
     def run(self):
         # Establishes connection
-        request = "GET / HTTP/1.0\r\nConnection: keep-alive\r\n\r\n"
+        request = "GET / HTTP/1.0\r\n\r\n"
         print("Request to %s:%d" % (self.server, self.port))
         print(request)
         print("------------\n")
