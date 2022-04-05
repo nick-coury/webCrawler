@@ -16,6 +16,9 @@ class Crawler:
         self.username = args.username
         self.password = args.password
 
+    def gen_post_msg (self, username, password, token) :
+        msg = "POST / HTTP/1.0\r\n "
+
     def run(self):
         request = "GET / HTTP/1.0\r\nConnection: keep-alive\r\n\r\n"
 
@@ -25,9 +28,12 @@ class Crawler:
         context = ssl.SSLContext()
         mysocket = context.wrap_socket(mysocket, server_hostname=self.server)
 
+        # Connects to the server
         mysocket.connect((self.server, self.port))
 
-        # Connects to the server 
+        # Send a POST message with the username and password 
+
+         
         mysocket.send(request.encode('ascii'))
 
         done = False
