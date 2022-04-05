@@ -117,7 +117,7 @@ class Crawler:
 
         # Send the original GET message 
         response = self.get_req(mysocket, DEFAULT_SERVER)
-        self.get_req(mysocket, project5.3700.network/fakebook)
+        #self.get_req(mysocket, "project5.3700.network/fakebook")
         #print("RESPONSE FROM GET: %s\n" % response)
 
         # Get the HTML structure of the login page in order to get the session crf 
