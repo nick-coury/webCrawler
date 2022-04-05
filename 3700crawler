@@ -81,7 +81,7 @@ class Crawler:
         # Content-Type: application/x-www-form-urlencoded
         on_login_page = False
         while not on_login_page:
-            loginPage = #GET(LOGIN_ENDPOINT)
+            loginPage = 1 #GET(LOGIN_ENDPOINT)
             if loginPage['Status'] == str(200):
                 on_login_page = True
 
