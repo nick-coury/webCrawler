@@ -28,10 +28,8 @@ class Crawler:
 
         done = False
 
-        while not done: 
-
-            
-
+        #while not done: 
+        for i in range (100) :
             data = mysocket.recv(1000)
             print("Response:\n%s" % data.decode('ascii'))
 
