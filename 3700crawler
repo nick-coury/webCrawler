@@ -56,7 +56,7 @@ class Crawler:
         # original URL: "scheme://netloc/path;parameters?query#fragment"
         host = parsed_url.netloc
 
-        sock.connect(host, DEFAULT_PORT)
+        #self.connect(host, DEFAULT_PORT)
 
         self.get_cookie()
         message = "GET %s HTTP/1.0\nHost: %s\n%s\r\n\r\n" % (url_path, host, self.cookie)
