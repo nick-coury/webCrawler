@@ -34,6 +34,9 @@ class Crawler:
         # Connects to the server @ port 
         mysocket.connect((self.server, self.port))
 
+        # Send the original GET message 
+        mysocket.send(request.encode('ascii'))
+
         # Get the HTML structure of the login page in order to get the session crf 
         html_request = "GET / HTTP/1.0\r\n\r\n"
         print("HTML request to %s:%d" % (self.server, self.port))
