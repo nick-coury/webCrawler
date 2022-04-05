@@ -55,7 +55,7 @@ class Crawler:
         # netloc is the root url  
         # original URL: "scheme://netloc/path;parameters?query#fragment"
         host = parsed_url.netloc
-        print("HOST: %s" % host)
+        print("HOST: %s\n" % host)
 
         #self.connect(host, DEFAULT_PORT)
 
