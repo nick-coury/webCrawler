@@ -13,7 +13,7 @@ class Crawler:
         self.password = args.password
 
     def run(self):
-        request = "GET / HTTP/1.0\r\nConnection: Keep-Alive\r\n\r\n"
+        request = "GET / HTTP/1.0\r\nConnection: keep-alive\r\n\r\n"
 
         print("Request to %s:%d" % (self.server, self.port))
         print(request)
@@ -22,10 +22,18 @@ class Crawler:
         mysocket = context.wrap_socket(mysocket, server_hostname=self.server)
 
         mysocket.connect((self.server, self.port))
+
+        # Connects to the server 
         mysocket.send(request.encode('ascii'))
 
-        data = mysocket.recv(1000)
-        print("Response:\n%s" % data.decode('ascii'))
+        done = False
+
+        while not done: 
+
+            
+
+            data = mysocket.recv(1000)
+            print("Response:\n%s" % data.decode('ascii'))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='crawl Fakebook')
