@@ -40,10 +40,13 @@ class Crawler:
         print(html_request)
         print("------------\n")
 
+        print("before waiting for data\n")
         # Get the HTML request response 
         data = mysocket.recv(1000)
+        print("received data\n")
         print("HTML response:\n%s" % data.decode('ascii'))
         print("------------\n")
+        print("after waiting for data\n")
 
         # Send a POST message with the username and password 
         #post_msg = self.gen_post_msg(self.username, self.password, token)
