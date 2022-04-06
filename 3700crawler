@@ -88,8 +88,10 @@ class Crawler:
 
         split_data = data.split('\n')
         print("DATA WE GOT: \n")
-        for entry, i in split_data :
+        i = 0
+        for entry in split_data :
             print("[%d] %s",(i, entry))
+            i += 1
         print("===============")
         return data
 
