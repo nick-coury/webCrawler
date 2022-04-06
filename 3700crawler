@@ -75,16 +75,20 @@ class Crawler:
         sock.send(message.encode())
         # Recieve a Message
         data = sock.recv(100000)
-        data = data.decode()
-
+        # Split here
+        split_response = data.split(b"/r/n/r/n")
+        http_response = split_response[0].decode()
+        html_response = split_response[1].decode()
+        print("HTTP RESPONSE: ", http_response)
+        print("HTML RESPONSE: ", html_response)
         print("======FEEDING======\n")
         # Feed the data to our parsers
         self.html_parser.feed(data)
         
         print("UPDATED MIDDLEWARE TOKEN: ", middleware_token)
         print("UPDATED FRONTEIR ", fronteir)
-        temp_data_to_split = data.encode()
-        print(temp_data_to_split)
+        # temp_data_to_split = data.encode()
+        # print(temp_data_to_split)
         #split_response = temp_data_to_split.split("/r/n/r/n")
         #print("HTTP: ", split_response[0])
         #print("HTML: ", split_response[1])
