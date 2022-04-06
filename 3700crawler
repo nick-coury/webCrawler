@@ -70,10 +70,10 @@ class Crawler:
         status_line = ""
         i = 0
         for line in split_data:
-            if i != 0: 
+            if i > 0: 
                 new_split = line.split(": ")
                 dictionary[new_split[0]] = new_split[1]
-            else :
+            else:
                 status_line = line
             print("STATUS LINE: ", status_line)
             i += 1    
