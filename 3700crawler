@@ -116,6 +116,7 @@ class Crawler:
         done = False
         while not done :    
             # Sending the GET request over the previously wrapped socket 
+            print("SENDING MESSAGE 11111111111111111111 \n", message)
             sock.send(message.encode())
             # Recieve a Message
             data = sock.recv(100000)
@@ -139,7 +140,7 @@ class Crawler:
                 done == True
 
         print(http_response)
-        print(html_response)
+        #print(html_response)
         
     
     def get_req(self, sock, host, path):        
@@ -176,7 +177,7 @@ class Crawler:
         post_msg += self.get_cookie() + "\r\n\r\n"
         # Add the data 
         post_msg += payload 
-
+    
         self.send_and_handle(sock, host, path, post_msg)        
 
     def login(self, sock, username, password):
