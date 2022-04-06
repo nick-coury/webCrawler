@@ -32,7 +32,7 @@ class MyHTMLParser(HTMLParser):
             # attr -> (name, value) -> (href, link)
                 if (attr[0] == "href" and attr[1] not in fronteir):
                     fronteir.append(attr[1])
-                    print("(((((((((((((((((", fronteir)
+                    #print("(((((((((((((((((", fronteir)
         # <input 
         # type="hidden" 
         # name="csrfmiddlewaretoken" 
@@ -41,7 +41,7 @@ class MyHTMLParser(HTMLParser):
             for attr in attrs:
                 if(attr[1] == "csrfmiddlewaretoken"):
                     middleware_token = attrs[2][1]
-                    print("********** ", attrs[2][1])
+                    #print("********** ", attrs[2][1])
                     break
 
 
@@ -67,22 +67,24 @@ class Crawler:
         # original URL: "scheme://netloc/path;parameters?query#fragment"
         print("HOST: %s\n" % host)
 
-        self.get_cookie()
+        #self.get_cookie()
         message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.cookie)
         print("THE GET MSG: %s" % message)
 
         # Sending the GET request over the previously wrapped socket 
         sock.send(message.encode())
-        # Re
+        # Recieve a Message
         data = sock.recv(100000)
         data = data.decode()
 
         print("======FEEDING======\n")
-
+        # Feed the data to our parsers
         self.html_parser.feed(data)
         
         print("UPDATED MIDDLEWARE TOKEN: ", middleware_token)
         print("UPDATED FRONTEIR ", fronteir)
+        
+        print("DATA: ", data)
 
         return data
 # \r\n\r\n
