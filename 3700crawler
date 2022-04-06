@@ -84,7 +84,9 @@ class Crawler:
         print("UPDATED MIDDLEWARE TOKEN: ", middleware_token)
         print("UPDATED FRONTEIR ", fronteir)
         
-        print("DATA: ", data)
+        split_response = data.split("/r/n/r/n")
+        print("HTTP: ", split_response[0])
+        print("HTML: ", split_response[1])
 
         return data
 # \r\n\r\n
