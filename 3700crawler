@@ -60,14 +60,11 @@ class Crawler:
     def get_cookie(self):
         return     
 
-    # Returns a dictionary contatiing important elements of the HTTP Response
-    #  Status -> Always returns a status code
-    #  csurf -> Returns if a token is present
-    #  sessionid -> Returns if a session id is present
+    # Returns the status code and stores information about cookies
     def parse_http(self, data):
+        # First, get the status and turn the rest into a dictionary
         split_data = data.split("\n")
         dictionary = {}
-        status = ""
         i = 0
         for line in split_data:
             if i > 0: 
@@ -78,6 +75,21 @@ class Crawler:
                 status = status_line[1]
                 print(status)
             i += 1    
+
+        # cookie_parts = dictionary["Set-Cookie"].split(" ")
+        # cookie_parts_again = cookie_parts[0].split("=")
+        # desired_cookie = cookie_parts_again[1]
+        # cookies = desired_cookie
+        # Cookie: csrftoken=asdasdasdasdasdasdasdas, sessionid=asdasdasdasdasdasd
+        self.cookie = "Cookie: "
+        cookie_parts = dictionary["Set-Cookie"].split(" ")
+        for part in cookie_parts:
+            if "csrftoken" in part:
+                self.cookie += part[0:len(part)]
+        print(self.cookie)
+        
+        
+        
         print("DICTIONARY\n")
         print(dictionary)
         print("++++++++++")
@@ -98,7 +110,7 @@ class Crawler:
         #     elif "Set-Cookie: " in line:
                 
         
-        return
+        return status
 
     def get_req(self, sock, host, path):        
         # Add path to the visited_pages list
@@ -125,8 +137,6 @@ class Crawler:
         split_response = data.split(b"\r\n\r\n\n\n\n")
         http_response = split_response[0].decode()
         html_response = split_response[1].decode()
-        #print("HTTP RESPONSE: \n", http_response)
-        #print("HTML RESPONSE: \n", html_response)
 
         # Feed the data to our parsers
         self.html_parser.feed(html_response)
@@ -136,9 +146,6 @@ class Crawler:
         print("UPDATED FRONTEIR ", fronteir)
 
         return data
-# \r\n\r\n
-# parsed_data[0] = HTTP -> First line HTTP Code (200) , Everything else is the fields -> Dictionary
-# paradasdasdsaas[1] = HTML
     
 
     def login(self, sock, username, password):
