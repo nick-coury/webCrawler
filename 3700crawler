@@ -56,7 +56,7 @@ class Crawler:
         self.html_parser = MyHTMLParser()
         self.location = ""
         self.csrf = ""
-        self.sessionid = ""
+        self.sessionid = "asdasdasdas"
 
     # Builds the cookie header based on the cookies we have and returns the finished cookie header
     def get_cookie(self):
