@@ -145,8 +145,7 @@ class Crawler:
             elif status == "302":
                 print("HOST &&&& : ", host)
                 print("LOCATION &&&&& : ", self.location)
-                self.get_req(host, self.location)
-                done = True
+                return self.get_req(host, self.location)
             elif status == "403" or status == "404":
                 done = True
             done = True
@@ -175,9 +174,11 @@ class Crawler:
         #self.get_cookie()
         print("**\n")
         message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.get_cookie())
+        print("Path: ", path)
+        print("Host: ", host)
         print("***\n")
         print("THE GET MSG: %s" % message)
-
+        print("****\n")
         self.send_and_handle(host, path, message)
     
     def post_req(self, host, path, payload):
