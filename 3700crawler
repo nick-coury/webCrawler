@@ -179,7 +179,7 @@ class Crawler:
         post_msg = ""
 
         # Add the header to the post message 
-        post_msg += "POST %s HTTP/1.0\r\nHost: %s\r\nConnection: close" % (path, host) + "\r\n"
+        post_msg += "POST %s HTTP/1.0\r\nHost: %s" % (path, host) + "\r\n"
         # Add the content length field representing the length of the payload 
         post_msg += "Content-Length: " + str(len(payload)) + "\r\n"
         # Add the content type (always application/x-www-form-urlencoded ?)
