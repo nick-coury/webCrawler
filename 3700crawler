@@ -82,6 +82,7 @@ class Crawler:
         self.html_parser.feed(data)
         
         print("UPDATED MIDDLEWARE TOKEN: ", middleware_token)
+        print("UPDATED FRONTEIR ", fronteir)
 
         return data
 # \r\n\r\n
