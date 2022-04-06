@@ -141,7 +141,7 @@ class Crawler:
                 self.html_parser.feed(html_response)
                 done = True
             elif status == "302":
-                self.get_req(sock, host, self.location)
+                self.get_req(host, self.location)
                 done = True
             elif status == "403" or status == "404":
                 done = True
@@ -185,7 +185,7 @@ class Crawler:
         # Add the content type (always application/x-www-form-urlencoded ?)
         post_msg += "Content-Type: application/x-www-form-urlencoded\r\n"
         # Add the cookie 
-        post_msg += self.get_cookie() + "\r\n"
+        post_msg += self.get_cookie() + "\r\n\r\n"
         # Add the data 
         post_msg += payload 
         self.send_and_handle(host, path, post_msg)        
