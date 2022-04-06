@@ -17,6 +17,7 @@ DEFAULT_PORT = 443
 visited_pages = {}
 fronteir = []
 flags = []
+middleware_token = ""
 
 class MyHTMLParser(HTMLParser):
     # This gets all the links we need to process and adds them to pages_to_visit iff they haven't been visited
@@ -30,6 +31,23 @@ class MyHTMLParser(HTMLParser):
             # attr -> (name, value) -> (href, link)
                 if (attr[0] == "href" and attr[1] not in fronteir):
                     fronteir.append(attr[1])
+# <input 
+# type="hidden" 
+# name="csrfmiddlewaretoken" 
+# value="sP02rxK0K6gHIn4j8X2gmE77wa10WJPJjctTWZ65Xq79I6yxfSLO0kW95zvjykT8">')
+        elif(tag == "input"):
+            for attr in attrs:
+                if(attr[1] == "csrfmiddlewaretoken"):
+                    print("********** ", attrs[3][0])
+                    # if(attrs[3][0] == )
+                    # token_line = attrs[3]
+                    # middleware_token = token_line[1]
+
+
+                    # for attr in attrs:
+                    #     if (attr[0] == "value"):
+                    #         middleware_token = attr[2]
+            
 
     
 
@@ -45,8 +63,7 @@ class Crawler:
         self.cookie = ""
 
     def get_cookie(self):
-        return
-        
+        return     
 
     def get_req(self, sock, host, path):
         #print("URL: %s\n" % url)
@@ -85,16 +102,18 @@ class Crawler:
         print("===============")
 
         #print(str(data))
-
-        split_data = data.split('\n')
-        print("DATA WE GOT: \n")
-        i = 0
-        for entry in split_data :
-            print("[%d] %s",(i, entry))
-            i += 1
-        print("===============")
+        self.html_parser.feed(data)
+        # split_data = data.split('\n')
+        # print("DATA WE GOT: \n")
+        # i = 0
+        # for entry in split_data :
+        #     print(i, entry)
+        #     i += 1
+        # print("===============")
         return data
-
+# \r\n\r\n
+# parsed_data[0] = HTTP -> First line HTTP Code (200) , Everything else is the fields -> Dictionary
+# paradasdasdsaas[1] = HTML
     
 
     def login(self, sock, username, password):
