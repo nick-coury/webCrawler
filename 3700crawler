@@ -38,7 +38,8 @@ class MyHTMLParser(HTMLParser):
         elif(tag == "input"):
             for attr in attrs:
                 if(attr[1] == "csrfmiddlewaretoken"):
-                    print("********** ", attrs[3][0])
+                    
+                    print("********** ", attrs[2][1])
                     # if(attrs[3][0] == )
                     # token_line = attrs[3]
                     # middleware_token = token_line[1]
