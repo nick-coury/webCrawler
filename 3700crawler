@@ -86,7 +86,7 @@ class Crawler:
         
         split_response = data.split("/r/n/r/n")
         print("HTTP: ", split_response[0])
-        print("HTML: ", split_response[1])
+        #print("HTML: ", split_response[1])
 
         return data
 # \r\n\r\n
