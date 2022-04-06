@@ -126,6 +126,8 @@ class Crawler:
             sock.send(message.encode())
             # Recieve a Message
             data = sock.recv(100000)
+            sock.shutdown(1)
+            sock.close()
             # print("######## ", data)
             # Split here into HTTP and HTML responses
             split_response = data.split(b"\r\n\r\n\n\n\n")
@@ -148,9 +150,6 @@ class Crawler:
             elif status == "403" or status == "404":
                 done = True
             done = True
-            
-            sock.shutdown(1)
-            sock.close()
 
         print(http_response)
         print(html_response)
@@ -161,7 +160,7 @@ class Crawler:
         visited_pages.append(path)
         
         # Checking if this is the root of the Host
-        if(path == " "):
+        if(path == ""):
             path = "/" 
 
         # netloc is the root url  
