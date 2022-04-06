@@ -179,23 +179,23 @@ class Crawler:
         post_msg = ""
 
         # Add the header to the post message 
-        post_msg += "POST %s HTTP/1.0\r\nHost: %s" % (path, host) + "\r\n"
+        post_msg += "POST %s HTTP/1.0\r\n" % path
+        post_msg += "Host: %s\r\n" % host
         # Add the content length field representing the length of the payload 
-        post_msg += "Content-Length: " + str(len(payload)) + "\r\n"
+        post_msg += "Content-Length: %s\r\n" % payload 
         # Add the content type (always application/x-www-form-urlencoded ?)
-        post_msg += "Content-Type: application/x-www-form-urlencoded" + "\r\n"
+        post_msg += "Content-Type: application/x-www-form-urlencoded\r\n"
         # Add the cookie 
         post_msg += self.get_cookie() + "\r\n\r\n"
         # Add the data 
         post_msg += payload 
-    
         self.send_and_handle(host, path, post_msg)        
 
     def login(self):
         # Send the original get request 
         self.get_req(DEFAULT_SERVER, DEFAULT_LOGIN)
         # Make the payload (username, password, middleware token)
-        payload = "username=%s&password=%s&csrfmiddlewaretoken=%s&next=/fakebook/" % (self.username, self.password, middleware_token)
+        payload = "username=%s&password=%s%s&next=/fakebook/" % (self.username, self.password, middleware_token)
         # Post message a request 
         self.post_req(DEFAULT_SERVER, DEFAULT_LOGIN, payload)
     
