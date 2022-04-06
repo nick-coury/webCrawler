@@ -107,6 +107,8 @@ class Crawler:
                 split_location = header.split(" ")
                 self.location = split_location[1]  
         
+        print("COOKIES ", self.get_cookie())
+
         return status
 
     def get_req(self, sock, host, path):        
