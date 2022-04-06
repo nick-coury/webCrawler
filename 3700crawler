@@ -81,7 +81,8 @@ class Crawler:
         #print("DATA WE GOT FROM A GET: %s\n" % data)
 
         print(type(data))
-        print(data)
+        print(data + '\n')
+        print("===============")
 
         print(str(data))
 
