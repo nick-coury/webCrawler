@@ -31,6 +31,9 @@ class MyHTMLParser(HTMLParser):
                 if (attr[0] == "href" and attr[1] not in fronteir):
                     fronteir.append(attr[1])
 
+    
+
+
 class Crawler:
     def __init__(self, args):
         self.server = args.server
