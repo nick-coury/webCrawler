@@ -55,7 +55,7 @@ class Crawler:
         self.password = args.password  
         self.html_parser = MyHTMLParser()
         self.location = ""
-        self.scrf = ""
+        self.csrf = ""
         self.sessionid = ""
 
     # Builds the cookie header based on the cookies we have and returns the finished cookie header
@@ -63,9 +63,9 @@ class Crawler:
         # Cookie: csrf=dasdasdasdasd; sessionid=asdasdasdasd
         add_semi = False
         cookie = ""
-        if self.scrf != "" or self.sessionid != "":
+        if self.csrf != "" or self.sessionid != "":
             cookie = "Cookie: "
-            if self.scrf:
+            if self.csrf:
                 cookie += self.csrf
                 add_semi = True
             if self.sessionid:
@@ -107,6 +107,7 @@ class Crawler:
                 split_location = header.split(" ")
                 self.location = split_location[1]  
         
+        print("CSRF ", self.csrf)
         print("COOKIES ", self.get_cookie())
 
         return status
