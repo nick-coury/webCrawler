@@ -13,8 +13,8 @@ DEFAULT_LOGIN = "/accounts/login/"
 DEFAULT_PORT = 443
 
 # Nick's Login: 
-USERNAME = "coury.ni"
-PASSWORD = "001477153"
+#USERNAME = "coury.ni"
+#PASSWORD = "001477153"
 
 visited_pages = [] # Represents pages that we have visited
 fronteir = [] # Represents pages that we are going to visit
@@ -112,9 +112,15 @@ class Crawler:
 
         return status
 
-    def send_and_handle(self, sock, host, path, message):
+    def send_and_handle(self, host, path, message):
         done = False
-        while not done :    
+        while not done :  
+            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            context = ssl.SSLContext()
+            sock = context.wrap_socket(sock, server_hostname=self.server)
+
+            sock.connect((self.server, self.port))
+            
             # Sending the GET request over the previously wrapped socket 
             print("SENDING MESSAGE 11111111111111111111 \n", message)
             sock.send(message.encode())
@@ -138,12 +144,15 @@ class Crawler:
                 self.get_req(sock, host, self.location)
             elif status == "403" or status == "404":
                 done == True
+            
+            sock.shutdown(1)
+            sock.close()
 
         print(http_response)
         #print(html_response)
         
     
-    def get_req(self, sock, host, path):        
+    def get_req(self, host, path):        
         # Add path to the visited_pages list
         visited_pages.append(path)
         
@@ -159,16 +168,16 @@ class Crawler:
         message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.get_cookie())
         print("THE GET MSG: %s" % message)
 
-        self.send_and_handle(sock, host, path, message)
+        self.send_and_handle(host, path, message)
     
-    def post_req(self, sock, host, path, payload):
+    def post_req(self, host, path, payload):
         if path == "":
             path = "/"
         
         post_msg = ""
 
         # Add the header to the post message 
-        post_msg = "POST %s HTTP/1.0\r\nHost: %s\r\nConnection: close" % (path, host) + "\r\n"
+        post_msg += "POST %s HTTP/1.0\r\nHost: %s\r\nConnection: close" % (path, host) + "\r\n"
         # Add the content length field representing the length of the payload 
         post_msg += "Content-Length: " + str(len(payload)) + "\r\n"
         # Add the content type (always application/x-www-form-urlencoded ?)
@@ -178,15 +187,15 @@ class Crawler:
         # Add the data 
         post_msg += payload 
     
-        self.send_and_handle(sock, host, path, post_msg)        
+        self.send_and_handle(host, path, post_msg)        
 
-    def login(self, sock, username, password):
+    def login(self):
         # Send the original get request 
-        self.get_req(sock, DEFAULT_SERVER, DEFAULT_LOGIN)
+        self.get_req(DEFAULT_SERVER, DEFAULT_LOGIN)
         # Make the payload (username, password, middleware token)
-        payload = "username=%s&password=%s&csrfmiddlewaretoken=%s&next=/fakebook/" % (USERNAME, PASSWORD, middleware_token)
+        payload = "username=%s&password=%s&csrfmiddlewaretoken=%s&next=/fakebook/" % (self.username, self.password, middleware_token)
         # Post message a request 
-        self.post_req(sock, DEFAULT_SERVER, DEFAULT_LOGIN, payload)
+        self.post_req(DEFAULT_SERVER, DEFAULT_LOGIN, payload)
     
     def run(self):      
         # Init the socket and wrap in SSL 
@@ -196,7 +205,7 @@ class Crawler:
 
         mysocket.connect((self.server, self.port))
 
-        self.login(mysocket, "coury.ni", "001477153")
+        self.login()
 
         # Start the crawl
 
