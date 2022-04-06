@@ -85,7 +85,7 @@ class Crawler:
         cookie_parts = dictionary["Set-Cookie"].split(" ")
         for part in cookie_parts:
             if "csrftoken" in part:
-                self.cookie += part[0:len(part)]
+                self.cookie += part[0:len(part) - 1]
         print(self.cookie)
         
         
