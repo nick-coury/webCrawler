@@ -79,7 +79,7 @@ class Crawler:
         # Split here
         split_response = data.split("/n/n/n/n")
 
-        http_response = split_response[0].decode()
+        http_response = split_response[0]
         print("HTTP RESPONSE: ", http_response)
         print("======END HTTP======\n")
         # html_response = split_response[1].decode()
