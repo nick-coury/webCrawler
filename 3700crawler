@@ -67,15 +67,16 @@ class Crawler:
     def parse_http(self, data):
         split_data = data.split("\n")
         dictionary = {}
-        status_line = ""
+        status = ""
         i = 0
         for line in split_data:
             if i > 0: 
                 new_split = line.split(": ")
                 dictionary[new_split[0]] = new_split[1]
             else:
-                status_line = line
-                print("STATUS LINE: ", status_line)
+                status_line = line.split(" ")
+                status = status_line[1]
+                print(status)
             i += 1    
         print("DICTIONARY\n")
         print(dictionary)
