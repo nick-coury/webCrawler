@@ -185,7 +185,7 @@ class Crawler:
         # Add the content type (always application/x-www-form-urlencoded ?)
         post_msg += "Content-Type: application/x-www-form-urlencoded\r\n"
         # Add the cookie 
-        post_msg += self.get_cookie() + "\r\n\r\n"
+        post_msg += self.get_cookie() + "\r\n"
         # Add the data 
         post_msg += payload 
         self.send_and_handle(host, path, post_msg)        
