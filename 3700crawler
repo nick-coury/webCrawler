@@ -142,7 +142,9 @@ class Crawler:
                 done = True
             elif status == "302":
                 self.get_req(sock, host, self.location)
+                done = True
             elif status == "403" or status == "404":
+                print("******************************* DONE 403")
                 done == True
             
             sock.shutdown(1)
