@@ -119,7 +119,7 @@ class Crawler:
             sock.send(message.encode())
             # Recieve a Message
             data = sock.recv(100000)
-            
+            print("######## ", data)
             # Split here into HTTP and HTML responses
             split_response = data.split(b"\r\n\r\n\n\n\n")
             print("$$$$$$$$ ", split_response)
