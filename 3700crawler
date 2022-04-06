@@ -32,10 +32,10 @@ class MyHTMLParser(HTMLParser):
                 if (attr[0] == "href" and attr[1] not in fronteir):
                     fronteir.append(attr[1])
                     print("(((((((((((((((((", fronteir)
-# <input 
-# type="hidden" 
-# name="csrfmiddlewaretoken" 
-# value="sP02rxK0K6gHIn4j8X2gmE77wa10WJPJjctTWZ65Xq79I6yxfSLO0kW95zvjykT8">')
+        # <input 
+        # type="hidden" 
+        # name="csrfmiddlewaretoken" 
+        # value="sP02rxK0K6gHIn4j8X2gmE77wa10WJPJjctTWZ65Xq79I6yxfSLO0kW95zvjykT8">')
         elif(tag == "input"):
             for attr in attrs:
                 if(attr[1] == "csrfmiddlewaretoken"):
@@ -58,16 +58,7 @@ class Crawler:
         return     
 
     def get_req(self, sock, host, path):
-        #print("URL: %s\n" % url)
-        # First parse our url
-        #parsed_url = urlparse(url)
-
-        #print("PARSED URL: ", parsed_url)
-        #url_path = path
-        #print("URL_PATH: %s\n" % path)
-
         # Checking if this is the root of the Host
-        # original URL: "scheme://netloc/path;parameters?query#fragment" if the path was empty then the new path needs / 
         if(path == " "):
             path = "/" 
 
@@ -75,33 +66,22 @@ class Crawler:
         # original URL: "scheme://netloc/path;parameters?query#fragment"
         print("HOST: %s\n" % host)
 
-        #self.connect(host, DEFAULT_PORT)
-
         self.get_cookie()
         message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.cookie)
         print("THE GET MSG: %s" % message)
+
         # Sending the GET request over the previously wrapped socket 
         sock.send(message.encode())
-        
+        # Re
         data = sock.recv(100000)
         data = data.decode()
 
-        #print("DATA_STATUS: %s" % data["Status"])
-        #print("DATA WE GOT FROM A GET: %s\n" % data)
+        print("======FEEDING======\n")
 
-        print(type(data))
-        # print(data, '\n')
-        print("===============")
-
-        #print(str(data))
         self.html_parser.feed(data)
-        # split_data = data.split('\n')
-        # print("DATA WE GOT: \n")
-        # i = 0
-        # for entry in split_data :
-        #     print(i, entry)
-        #     i += 1
-        # print("===============")
+        
+        print("UPDATED MIDDLEWARE TOKEN: ", middleware_token)
+
         return data
 # \r\n\r\n
 # parsed_data[0] = HTTP -> First line HTTP Code (200) , Everything else is the fields -> Dictionary
@@ -109,34 +89,26 @@ class Crawler:
     
 
     def login(self, sock, username, password):
-        # POST path_from_host HTTTP/1.1
-        # Host: DEFAULT_URL
-        # Cookie: COOKIE
-        # Content Length: (Size of the arugments including \r\n)
-        # username=___&password=___&crfmiddlewaretocken=___
-        # Content-Type: application/x-www-form-urlencoded
         on_login_page = False
         while not on_login_page:
-
             loginPage = self.get_req(sock, DEFAULT_SERVER, DEFAULT_LOGIN)
             on_login_page = True
             # add a helper that takes in a get request and returns a dictionary 
             # if loginPage['Status'] == "200":
             #     on_login_page = True
 
-        #token = loginPage['Cookies-Object']['csrftoken']
-        #session_id = loginPage['Cookies-Object']['sessionid']
-
-
+        # POST path_from_host HTTTP/1.1
+        # Host: DEFAULT_URL
+        # Cookie: COOKIE
+        # Content Length: (Size of the arugments including \r\n)
+        # username=___&password=___&crfmiddlewaretocken=___
+        # Content-Type: application/x-www-form-urlencoded
 
         # login = "POST %s HTTP/1.0\r\n" % DEFAULT_LOGIN
         # header_list = ['Content-Type: application/x-www-form-urlencoded', 'Host: ' + DEFAULT_SERVER] 
         # content = "username={username}&password={password}&crfmifflewaretoken={token}&next=%2Ffakebook%2F\r\n"
         # # Connects to the server @ port 
         # sock.connect(DEFAULT_LOGIN)
-
-        # # Send the original GET message 
-        # sock.send(login.encode('ascii'))
     
     def run(self):      
         # Init the socket and wrap in SSL 
@@ -144,51 +116,12 @@ class Crawler:
         context = ssl.SSLContext()
         mysocket = context.wrap_socket(mysocket, server_hostname=self.server)
 
-        # Connects to the server @ port 
-        # print("SELF>SERVER: %s\n" % self.server)
-        # print("SELF>PORT: %s\n" % self.port)
         mysocket.connect((self.server, self.port))
 
         self.login(mysocket, "coury.ni", "001477153")
 
         # Start the crawl
 
-
-
-
-        
-        # Send the original GET message 
-        # print("DeFAULT SERVER: ", DEFAULT_SERVER)
-        #response = self.get_req(mysocket, DEFAULT_SERVER)
-        # self.get_req(mysocket, "project5.3700.network", "/fakebook/")
-        #print("RESPONSE FROM GET: %s\n" % response)
-
-        # Get the HTML structure of the login page in order to get the session crf 
-        # html_request = "GET / HTTP/1.0\r\n\r\n"
-        # print("HTML request to %s:%d" % (self.server, self.port))
-        # print(html_request)
-        # print("------------\n")
-
-        # print("before waiting for data\n")
-        # # Get the HTML request response 
-        # data = mysocket.recv(1000)
-        # print("received data\n")
-        # print("HTML response:\n%s" % data.decode('ascii'))
-        # print("------------\n")
-        # print("after waiting for data\n")
-
-        # Send a POST message with the username and password 
-        #post_msg = self.gen_post_msg(self.username, self.password, token)
-         
-        # mysocket.send(request.encode('ascii'))
-
-        # done = False
-
-        # #while not done: 
-        # #for i in range (4) :
-        #     #print ("[%d]" % i)
-        # data = mysocket.recv(1000)
-        # print("Response:\n%s" % data.decode('ascii'))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='crawl Fakebook')
