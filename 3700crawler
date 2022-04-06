@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse, socket, ssl
+from posixpath import split
 from ast import parse
 
 from html.parser import HTMLParser
@@ -54,17 +55,42 @@ class Crawler:
         self.password = args.password  
         self.html_parser = MyHTMLParser()
 
-        self.cookie = ""
-
     def get_cookie(self):
         return     
 
-    def parse_http(self, data) :
-        parsed_data = data.split("\n")
-        i=0
-        for line in parsed_data :
-            print(i, line)
-            i +=1
+    # Returns a dictionary contatiing important elements of the HTTP Response
+    #  Status -> Always returns a status code
+    #  csurf -> Returns if a token is present
+    #  sessionid -> Returns if a session id is present
+    def parse_http(self, data):
+        split_data = data.split("\n")
+        data_dict = {}
+
+        dictionary = {}
+        for line in split_data:
+            new_split = line.split(":")
+            dictionary[new_split[0]] = new_split[1]
+        print("DICTIONARY\n")
+        print(dictionary)
+        print("++++++++++")
+        # for line in split_data :
+        #     # Handle Status Codes
+        #     if "HTTP/1.1 " in line :
+        #         if "200" in line : 
+        #             data_dict["status"] = 200
+        #         elif "302" in line :
+        #             data_dict["status"] = 302
+        #         elif "403" in line or "404" in line :
+        #             data_dict["status"] = 403 
+        #         elif "500" in line :
+        #             data_dict["status"] = 500
+        #         else:
+        #             raise Exception("MESSED UP STATUS CODE")
+        #     # Handle Cookies
+        #     elif "Set-Cookie: " in line:
+                
+        
+        return
 
     def get_req(self, sock, host, path):        
         # Add path to the visited_pages list
@@ -86,20 +112,17 @@ class Crawler:
         sock.send(message.encode())
         # Recieve a Message
         data = sock.recv(100000)
-        #data = data.decode()
-        # Split here
-        split_response = data.split(b"\r\n\r\n\n\n\n")
-
-        http_response = split_response[0].decode()
-        #print("HTTP RESPONSE: \n", http_response)
-
-        parsed_http = self.parse_http(http_response)
         
+        # Split here into HTTP and HTML responses
+        split_response = data.split(b"\r\n\r\n\n\n\n")
+        http_response = split_response[0].decode()
         html_response = split_response[1].decode()
+        #print("HTTP RESPONSE: \n", http_response)
         #print("HTML RESPONSE: \n", html_response)
 
         # Feed the data to our parsers
         self.html_parser.feed(html_response)
+        self.parse_http(http_response)
         
         print("UPDATED MIDDLEWARE TOKEN: ", middleware_token)
         print("UPDATED FRONTEIR ", fronteir)
