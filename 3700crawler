@@ -90,7 +90,7 @@ class Crawler:
         print("DATA WE GOT: \n")
         for entry in split_data :
             print(entry)
-        #print("DATA WE GOT FROM A GET: %s\n" % split_data)
+        print("===============")
         return data
 
     
