@@ -77,7 +77,7 @@ class Crawler:
         data = sock.recv(100000)
         data = data.decode()
         # Split here
-        split_response = data.split("/n/n/n/n")
+        split_response = data.split("/n")
 
         http_response = split_response[0]
         print("HTTP RESPONSE: ", http_response)
