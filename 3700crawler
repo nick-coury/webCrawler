@@ -122,15 +122,15 @@ class Crawler:
             
             # Split here into HTTP and HTML responses
             split_response = data.split(b"\r\n\r\n\n\n\n")
+            print("$$$$$$$$ ", split_response)
             http_response = split_response[0].decode()
-            html_response = split_response[1].decode()
-
 
             # Feed the data to our parser based on the status code
             status = self.parse_http(http_response)
             
             # If we have successfully reached the page 
             if status == "200":
+                html_response = split_response[1].decode()
                 self.html_parser.feed(html_response)
                 done = True
             elif status == "302":
