@@ -165,7 +165,7 @@ class Crawler:
         if path == "":
             path = "/"
         
-        post_msg = " n "
+        post_msg = "n "
 
         # Add the header to the post message 
         post_msg += "POST %s HTTP/1.0\r\nHost: %s\r\nConnection: close" % (path, host) + "\r\n"
