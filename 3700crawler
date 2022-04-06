@@ -114,7 +114,7 @@ class Crawler:
 
     def send_and_handle(self, host, path, message):
         done = False
-        while not done :  
+        while not done:  
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             context = ssl.SSLContext()
             sock = context.wrap_socket(sock, server_hostname=self.server)
@@ -126,10 +126,10 @@ class Crawler:
             sock.send(message.encode())
             # Recieve a Message
             data = sock.recv(100000)
-            print("######## ", data)
+            # print("######## ", data)
             # Split here into HTTP and HTML responses
             split_response = data.split(b"\r\n\r\n\n\n\n")
-            print("$$$$$$$$ ", split_response)
+            # print("$$$$$$$$ ", split_response)
             http_response = split_response[0].decode()
 
             # Feed the data to our parser based on the status code
@@ -145,7 +145,7 @@ class Crawler:
                 done = True
             elif status == "403" or status == "404":
                 print("******************************* DONE 403")
-                done == True
+                done = True
             
             sock.shutdown(1)
             sock.close()
