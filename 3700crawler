@@ -13,8 +13,8 @@ DEFAULT_LOGIN = "/accounts/login/"
 DEFAULT_PORT = 443
 
 # Nick's Login: 
-# username: coury.ni
-# password: 001477153
+USERNAME = "coury.ni"
+PASSWORD = "001477153"
 
 visited_pages = [] # Represents pages that we have visited
 fronteir = [] # Represents pages that we are going to visit
@@ -56,7 +56,7 @@ class Crawler:
         self.html_parser = MyHTMLParser()
         self.location = ""
         self.csrf = ""
-        self.sessionid = "asdasdasdas"
+        self.sessionid = ""
 
     # Builds the cookie header based on the cookies we have and returns the finished cookie header
     def get_cookie(self):
@@ -112,22 +112,7 @@ class Crawler:
 
         return status
 
-    def get_req(self, sock, host, path):        
-        # Add path to the visited_pages list
-        visited_pages.append(path)
-        
-        # Checking if this is the root of the Host
-        if(path == " "):
-            path = "/" 
-
-        # netloc is the root url  
-        # original URL: "scheme://netloc/path;parameters?query#fragment"
-        print("HOST: %s\n" % host)
-
-        #self.get_cookie()
-        message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.get_cookie())
-        print("THE GET MSG: %s" % message)
-
+    def send_and_handle(self, sock, host, path, message):
         done = False
         while not done :    
             # Sending the GET request over the previously wrapped socket 
@@ -149,37 +134,58 @@ class Crawler:
                 self.html_parser.feed(html_response)
                 done = True
             elif status == "302":
-                path = self.location
+                self.get_req(sock, host, self.location)
             elif status == "403" or status == "404":
                 done == True
-        
-        print("UPDATED MIDDLEWARE TOKEN: ", middleware_token)
-        print("UPDATED FRONTEIR ", fronteir)
 
-        return data
+        print(http_response)
+        print(html_response)
+        
     
+    def get_req(self, sock, host, path):        
+        # Add path to the visited_pages list
+        visited_pages.append(path)
+        
+        # Checking if this is the root of the Host
+        if(path == " "):
+            path = "/" 
+
+        # netloc is the root url  
+        # original URL: "scheme://netloc/path;parameters?query#fragment"
+        print("HOST: %s\n" % host)
+
+        #self.get_cookie()
+        message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.get_cookie())
+        print("THE GET MSG: %s" % message)
+
+        self.send_and_handle(sock, host, path, message)
+    
+    def post_req(self, sock, host, path, payload):
+        if path == "":
+            path = "/"
+        
+        post_msg = ""
+
+        # Add the header to the post message 
+        post_msg += "POST %s HTTP/1.0\r\nHost: %s\r\nConnection: close" % (path, host) + "\r\n"
+        # Add the content length field representing the length of the payload 
+        post_msg += "Content-Length: " + str(len(payload)) + "\r\n"
+        # Add the content type (always application/x-www-form-urlencoded ?)
+        post_msg += "Content-Type: application/x-www-form-urlencoded" + "\r\n"
+        # Add the cookie 
+        post_msg += self.get_cookie() + "\r\n\r\n"
+        # Add the data 
+        post_msg += payload 
+
+        self.send_and_handle(sock, host, path, post_msg)        
 
     def login(self, sock, username, password):
-        on_login_page = False
-        while not on_login_page:
-            loginPage = self.get_req(sock, DEFAULT_SERVER, DEFAULT_LOGIN)
-            on_login_page = True
-            # add a helper that takes in a get request and returns a dictionary 
-            # if loginPage['Status'] == "200":
-            #     on_login_page = True
-
-        # POST path_from_host HTTTP/1.1
-        # Host: DEFAULT_URL
-        # Cookie: COOKIE
-        # Content Length: (Size of the arugments including \r\n)
-        # username=___&password=___&crfmiddlewaretocken=___
-        # Content-Type: application/x-www-form-urlencoded
-
-        # login = "POST %s HTTP/1.0\r\n" % DEFAULT_LOGIN
-        # header_list = ['Content-Type: application/x-www-form-urlencoded', 'Host: ' + DEFAULT_SERVER] 
-        # content = "username={username}&password={password}&crfmifflewaretoken={token}&next=%2Ffakebook%2F\r\n"
-        # # Connects to the server @ port 
-        # sock.connect(DEFAULT_LOGIN)
+        # Send the original get request 
+        self.get_req(sock, DEFAULT_SERVER, DEFAULT_LOGIN)
+        # Make the payload (username, password, middleware token)
+        payload = "username=%s&password=%s&csrfmiddlewaretoken=%s&next=/fakebook/" % (USERNAME, PASSWORD, middleware_token)
+        # Post message a request 
+        self.post_req(sock, DEFAULT_SERVER, DEFAULT_LOGIN, payload)
     
     def run(self):      
         # Init the socket and wrap in SSL 
