@@ -75,7 +75,7 @@ class Crawler:
         sock.send(message.encode())
         
         data = sock.recv(100000)
-        #data.decode('ascii')
+        data.decode('ascii')
 
         #print("DATA_STATUS: %s" % data["Status"])
         #print("DATA WE GOT FROM A GET: %s\n" % data)
@@ -87,7 +87,7 @@ class Crawler:
         #print(str(data))
 
         parsed_data = self.html_parser.feed(str(data))
-        print("DATA WE GOT FROM A GET: %s\n" % parsed_data)
+        print("DATA WE GOT FROM A GET: %s\n" % data)
         return data
 
     
@@ -108,8 +108,8 @@ class Crawler:
             # if loginPage['Status'] == "200":
             #     on_login_page = True
 
-        # token = loginPage['Cookies-Object']['csrftoken']
-        # session_id = loginPage['Cookies-Object']['sessionid']
+        #token = loginPage['Cookies-Object']['csrftoken']
+        #session_id = loginPage['Cookies-Object']['sessionid']
 
 
 
