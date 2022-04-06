@@ -154,6 +154,11 @@ class Crawler:
         print(http_response)
         print(html_response)
         
+# Should be: GET /fakebook/ HTTP/1.0
+# We got: HTTP/1.0SG: GET /fakebook/
+# Host: project5.3700.network
+# Cookie: csrftoken=gIk4kgWJEvQRT5a9HRWB0hPEWs23oiUvvztIRkIQZAb9gYPmigKzXgmNx7Cvvszl; sessionid=nchuhnhn0o0r4s6u79necalesjadrfnn
+
     
     def get_req(self, host, path):        
         # Add path to the visited_pages list
@@ -168,6 +173,7 @@ class Crawler:
         print("HOST: %s\n" % host)
 
         #self.get_cookie()
+        print("**\n")
         message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.get_cookie())
         print("THE GET MSG: %s" % message)
 
