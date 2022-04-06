@@ -73,10 +73,10 @@ class Crawler:
         for line in split_data:
             if i != 0: 
                 new_split = line.split(": ")
-                print("key: ", new_split[0])
-                print("value: ", new_split[1])
+                # print("key: ", new_split[0])
+                # print("value: ", new_split[1])
+                dictionary[new_split[0]] = new_split[1]
             i += 1    
-            #dictionary[new_split[0]] = new_split[1]
         print("DICTIONARY\n")
         print(dictionary)
         print("++++++++++")
