@@ -80,14 +80,14 @@ class Crawler:
         #print("DATA_STATUS: %s" % data["Status"])
         #print("DATA WE GOT FROM A GET: %s\n" % data)
 
-        print(type(data))
-        print(data, '\n')
+        # print(type(data))
+        # print(data, '\n')
         print("===============")
 
-        print(str(data))
+        #print(str(data))
 
-        #parsed_data = self.html_parser.feed(data)
-        #print("DATA WE GOT FROM A GET: %s\n" % parsed_data)
+        parsed_data = self.html_parser.feed(str(data))
+        print("DATA WE GOT FROM A GET: %s\n" % parsed_data)
         return data
 
     
