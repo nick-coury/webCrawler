@@ -86,7 +86,7 @@ class Crawler:
 
         #print(str(data))
 
-        split_data = data.split('\n')
+        split_data = data.split(b'\n')
         print("DATA WE GOT: \n")
         for entry in split_data :
             print(entry, '\n')
