@@ -122,7 +122,7 @@ class Crawler:
         print("HOST: %s\n" % host)
 
         #self.get_cookie()
-        message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.cookie)
+        message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.get_cookie())
         print("THE GET MSG: %s" % message)
 
         done = False
