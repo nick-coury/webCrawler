@@ -150,7 +150,7 @@ class Crawler:
             sock.close()
 
         print(http_response)
-        #print(html_response)
+        print(html_response)
         
     
     def get_req(self, host, path):        
