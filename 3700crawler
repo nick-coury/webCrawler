@@ -141,10 +141,13 @@ class Crawler:
                 self.html_parser.feed(html_response)
                 done = True
             elif status == "302":
+                print("HOST &&&& : ", host)
+                print("LOCATION &&&&& : ", self.location)
                 self.get_req(host, self.location)
                 done = True
             elif status == "403" or status == "404":
                 done = True
+            done = True
             
             sock.shutdown(1)
             sock.close()
