@@ -31,6 +31,7 @@ class MyHTMLParser(HTMLParser):
             # attr -> (name, value) -> (href, link)
                 if (attr[0] == "href" and attr[1] not in fronteir):
                     fronteir.append(attr[1])
+                    print("(((((((((((((((((", fronteir)
 # <input 
 # type="hidden" 
 # name="csrfmiddlewaretoken" 
@@ -38,19 +39,9 @@ class MyHTMLParser(HTMLParser):
         elif(tag == "input"):
             for attr in attrs:
                 if(attr[1] == "csrfmiddlewaretoken"):
-                    
+                    middleware_token = attrs[2][1]
                     print("********** ", attrs[2][1])
-                    # if(attrs[3][0] == )
-                    # token_line = attrs[3]
-                    # middleware_token = token_line[1]
-
-
-                    # for attr in attrs:
-                    #     if (attr[0] == "value"):
-                    #         middleware_token = attr[2]
-            
-
-    
+                    break
 
 
 class Crawler:
