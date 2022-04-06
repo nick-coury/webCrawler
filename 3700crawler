@@ -75,7 +75,7 @@ class Crawler:
                 dictionary[new_split[0]] = new_split[1]
             else:
                 status_line = line
-            print("STATUS LINE: ", status_line)
+                print("STATUS LINE: ", status_line)
             i += 1    
         print("DICTIONARY\n")
         print(dictionary)
