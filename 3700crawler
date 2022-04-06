@@ -55,6 +55,8 @@ class Crawler:
         self.password = args.password  
         self.html_parser = MyHTMLParser()
 
+        self.cookie 
+
     def get_cookie(self):
         return     
 
