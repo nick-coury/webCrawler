@@ -195,7 +195,7 @@ class Crawler:
         # Send the original get request 
         self.get_req(DEFAULT_SERVER, DEFAULT_LOGIN)
         # Make the payload (username, password, middleware token)
-        payload = "username=%s&password=%s%s&next=/fakebook/" % (self.username, self.password, middleware_token)
+        payload = "username=%s&password=%s&%s&next=/fakebook/" % (self.username, self.password, middleware_token)
         # Post message a request 
         self.post_req(DEFAULT_SERVER, DEFAULT_LOGIN, payload)
     
