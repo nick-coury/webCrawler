@@ -75,7 +75,7 @@ class Crawler:
         sock.send(message.encode())
         
         data = sock.recv(100000)
-        data.decode('ascii')
+        #data.decode('ascii')
 
         #print("DATA_STATUS: %s" % data["Status"])
         #print("DATA WE GOT FROM A GET: %s\n" % data)
@@ -86,7 +86,7 @@ class Crawler:
 
         #print(str(data))
 
-        parsed_data = self.html_parser.feed(str(data))
+        parsed_data = self.html_parser.feed(data)
         print("DATA WE GOT FROM A GET: %s\n" % parsed_data)
         return data
 
