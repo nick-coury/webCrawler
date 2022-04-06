@@ -25,6 +25,7 @@ class MyHTMLParser(HTMLParser):
     #  <a href= LINK>TEXT</a>
     def handle_starttag(self, tag, attrs):
         # We only care about links to other pages 
+        global middleware_token
         if (tag == "a"):
             # Possibly leave this out later when we test
             for attr in attrs:
