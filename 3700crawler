@@ -181,7 +181,7 @@ class Crawler:
         post_msg += "POST %s HTTP/1.0\r\n" % path
         post_msg += "Host: %s\r\n" % host
         # Add the content length field representing the length of the payload 
-        post_msg += "Content-Length: %s\r\n" % payload 
+        post_msg += "Content-Length: %s\r\n" % str(len(payload)) 
         # Add the content type (always application/x-www-form-urlencoded ?)
         post_msg += "Content-Type: application/x-www-form-urlencoded\r\n"
         # Add the cookie 
