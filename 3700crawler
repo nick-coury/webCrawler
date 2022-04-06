@@ -86,7 +86,7 @@ class Crawler:
 
         #print(str(data))
 
-        parsed_data = self.html_parser.feed(data)
+        parsed_data = self.html_parser.feed(str(data))
         print("DATA WE GOT FROM A GET: %s\n" % parsed_data)
         return data
 
