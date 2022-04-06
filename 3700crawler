@@ -43,7 +43,7 @@ class MyHTMLParser(HTMLParser):
         elif(tag == "input"):
             for attr in attrs:
                 if(attr[1] == "csrfmiddlewaretoken"):
-                    middleware_token = attrs[2][1]
+                    middleware_token = "csrfmiddlewaretoken=" + attrs[2][1]
                     break
 
 
@@ -54,61 +54,58 @@ class Crawler:
         self.username = args.username
         self.password = args.password  
         self.html_parser = MyHTMLParser()
+        self.location = ""
+        self.scrf = ""
+        self.sessionid = ""
 
-        self.cookie = ""
-
+    # Builds the cookie header based on the cookies we have and returns the finished cookie header
     def get_cookie(self):
-        return     
+        # Cookie: csrf=dasdasdasdasd; sessionid=asdasdasdasd
+        add_semi = False
+        cookie = ""
+        if self.scrf != "" or self.sessionid != "":
+            cookie = "Cookie: "
+            if self.scrf:
+                cookie += self.csrf
+                add_semi = True
+            if self.sessionid:
+                if add_semi:
+                    cookie += "; "
+                cookie += self.sessionid
 
-    # Returns the status code and stores information about cookies
+        # If not empty then add the trailing returns 
+        if(cookie != ""):
+            cookie += "\r\n"
+
+        return cookie  
+
+    # Returns the status code and stores information about cookies and location (if applicable)
     def parse_http(self, data):
         # First, get the status and turn the rest into a dictionary
         split_data = data.split("\n")
-        dictionary = {}
+        headers = []
         i = 0
         for line in split_data:
             if i > 0: 
-                new_split = line.split(": ")
-                dictionary[new_split[0]] = new_split[1]
+                headers.append(line)
             else:
                 status_line = line.split(" ")
                 status = status_line[1]
                 print(status)
             i += 1    
 
-        # cookie_parts = dictionary["Set-Cookie"].split(" ")
-        # cookie_parts_again = cookie_parts[0].split("=")
-        # desired_cookie = cookie_parts_again[1]
-        # cookies = desired_cookie
-        # Cookie: csrftoken=asdasdasdasdasdasdasdas, sessionid=asdasdasdasdasdasd
-        self.cookie = "Cookie: "
-        cookie_parts = dictionary["Set-Cookie"].split(" ")
-        for part in cookie_parts:
-            if "csrftoken" in part:
-                self.cookie += part[0:len(part) - 1]
-        print(self.cookie)
-        
-        
-        
-        print("DICTIONARY\n")
-        print(dictionary)
-        print("++++++++++")
-        # for line in split_data :
-        #     # Handle Status Codes
-        #     if "HTTP/1.1 " in line :
-        #         if "200" in line : 
-        #             data_dict["status"] = 200
-        #         elif "302" in line :
-        #             data_dict["status"] = 302
-        #         elif "403" in line or "404" in line :
-        #             data_dict["status"] = 403 
-        #         elif "500" in line :
-        #             data_dict["status"] = 500
-        #         else:
-        #             raise Exception("MESSED UP STATUS CODE")
-        #     # Handle Cookies
-        #     elif "Set-Cookie: " in line:
-                
+        # Store the csrf, sessionid, and location if they are present in the header
+        for header in headers:
+            if "Set-Cookie" in header:
+                split_cookie = header.split(" ")
+                for part in split_cookie:
+                    if "csrftoken" in part:
+                        self.csrf = part[0:len(part) - 1]
+                    elif "sessionid" in part: 
+                        self.sessionid = part[0:len(part) - 1]  
+            elif "Location" in header:
+                split_location = header.split(" ")
+                self.location = split_location[1]  
         
         return status
 
@@ -128,19 +125,30 @@ class Crawler:
         message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.cookie)
         print("THE GET MSG: %s" % message)
 
-        # Sending the GET request over the previously wrapped socket 
-        sock.send(message.encode())
-        # Recieve a Message
-        data = sock.recv(100000)
-        
-        # Split here into HTTP and HTML responses
-        split_response = data.split(b"\r\n\r\n\n\n\n")
-        http_response = split_response[0].decode()
-        html_response = split_response[1].decode()
+        done = False
+        while not done :    
+            # Sending the GET request over the previously wrapped socket 
+            sock.send(message.encode())
+            # Recieve a Message
+            data = sock.recv(100000)
+            
+            # Split here into HTTP and HTML responses
+            split_response = data.split(b"\r\n\r\n\n\n\n")
+            http_response = split_response[0].decode()
+            html_response = split_response[1].decode()
 
-        # Feed the data to our parsers
-        self.html_parser.feed(html_response)
-        self.parse_http(http_response)
+
+            # Feed the data to our parser based on the status code
+            status = self.parse_http(http_response)
+            
+            # If we have successfully reached the page 
+            if status == "200":
+                self.html_parser.feed(html_response)
+                done = True
+            elif status == "302":
+                path = self.location
+            elif status == "403" or status == "404":
+                done == True
         
         print("UPDATED MIDDLEWARE TOKEN: ", middleware_token)
         print("UPDATED FRONTEIR ", fronteir)
