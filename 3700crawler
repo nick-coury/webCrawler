@@ -37,7 +37,6 @@ class MyHTMLParser(HTMLParser):
 
         # Example tag for middleware token:       
         # <input type="hidden" name="csrfmiddlewaretoken" value="sP02rxK0K6gHIn4j8X2gmE77wa10WJPJjctTWZ65Xq79I6yxfSLO0kW95zvjykT8">
-        
         # If we encounter the middleware, we know that the value is stored in the 3rd attribute
         #  Save it off
         elif(tag == "input"):
@@ -197,8 +196,19 @@ class Crawler:
         # Start by logging in
         self.login()
         # Start the crawl
-        found_flags = 0
-        while found_flags != 5:
+        while len(flags) <= 5:
+            # HTML Parser:
+            #   Look for links and flags on current page 
+            #   Add found flags to flag list 
+            #   Add found links to fronteir  
+            # Main Loop:
+            #   Crawl to next page
+            self.get_req(self.server, fronteir[0])
+            fronteir.pop(0)
+            print("FRONTEIR---------------------------\n", fronteir)
+            print("VISITED---------------------------\n", visited_pages)
+            #   Analyze - (add other found links and flags accordingly)
+            #   Add to visited, remove from frontier
             return
             
 
