@@ -160,7 +160,7 @@ class Crawler:
 
     
     def get_req(self, host, path):       
-        print("inside get: \nhost: %s\n path: %s" % (host, path)) 
+        print("inside get: \nhost: %s\npath: %s" % (host, path)) 
         # Add path to the visited_pages list
         visited_pages.append(path)
         print("appended to visited pages: %s" % path)
@@ -174,13 +174,24 @@ class Crawler:
 
         #self.get_cookie()
         print("**\n")
-        message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.get_cookie())
-        print("message: %s" % message)
+        message = "GET "
+        print("message 1: %s" % message)
+        message += path 
+        print("message 2: %s" % message)
+        message += " HTTP/1.0\r\n"
+        print("message 3: %s" % message)
+        message += "Host: " + host + "\r\n"
+        print("message :4 %s" % message)
+        message += self.get_cookie()
+        print("message 5: %s" % message)
+
+        #message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.get_cookie())
+        #print("message: %s" % message)
         #print("Path: ", path)
         #print("Host: ", host)
         print("***\n")
-        print("THE GET MSG: %s" % message)
-        print("****\n")
+        #print("THE GET MSG: %s" % message)
+        #print("****\n")
         self.send_and_handle(host, path, message)
     
     def post_req(self, host, path, payload):
