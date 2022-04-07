@@ -16,6 +16,10 @@ DEFAULT_PORT = 443
 #USERNAME = "coury.ni"
 #PASSWORD = "001477153"
 
+# Ian's Login:
+#USERNAME = "uyeda.i"
+#PASSWORD = "001369309"
+
 visited_pages = [] # Represents pages that we have visited
 fronteir = [] # Represents pages that we are going to visit
 flags = [] # Holds all discovered flags 
@@ -226,7 +230,9 @@ class Crawler:
             else:
                 print("removed bad url")
                 fronteir.pop(0)
-        print(flags)
+        # Print out all flags
+        for flag in flags:
+            print(flag + "\n")
             
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='crawl Fakebook')
