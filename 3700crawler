@@ -236,6 +236,7 @@ class Crawler:
         # mysocket = context.wrap_socket(mysocket, server_hostname=self.server)
 
         # mysocket.connect((self.server, self.port))
+        
         self.login()
 
         # Start the crawl
