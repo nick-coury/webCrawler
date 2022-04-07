@@ -189,15 +189,17 @@ class Crawler:
         # print("message :4 %s\n" % message)
         # print("between 4 and 5\n")
         message += self.get_cookie() + "\r\n"
-        print("message 5: %s\n" % message)
+        #print("message 5: %s\n" % message)
 
         #message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.get_cookie())
         #print("message: %s" % message)
         #print("Path: ", path)
         #print("Host: ", host)
-        print("***\n")
+        #print("***\n")
         #print("THE GET MSG: %s" % message)
         #print("****\n")
+        
+        
         
     
     def post_req(self, host, path, payload):
@@ -234,7 +236,7 @@ class Crawler:
         # mysocket = context.wrap_socket(mysocket, server_hostname=self.server)
 
         # mysocket.connect((self.server, self.port))
-        self.send_and_handle(host, path, "GET /accounts/login/?next=/fakebook/ HTTP/1.1\r\nHost: project5.3700.network:443\r\n\r\n")
+        self.send_and_handle("project5.3700.network", "/accounts/login/?next=/fakebook/", "GET /accounts/login/?next=/fakebook/ HTTP/1.1\r\nHost: project5.3700.network:443\r\n\r\n")
         #self.login()
 
         # Start the crawl
