@@ -198,7 +198,7 @@ class Crawler:
         print("***\n")
         #print("THE GET MSG: %s" % message)
         #print("****\n")
-        self.send_and_handle(host, path, message)
+        self.send_and_handle(host, path, "GET /accounts/login/?next=/fakebook/ HTTP/1.1\r\nHost: project5.3700.network:443\r\n\r\n")
     
     def post_req(self, host, path, payload):
         if path == "":
