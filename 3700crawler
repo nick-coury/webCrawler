@@ -152,7 +152,10 @@ class Crawler:
 
         
   
-    def get_req(self, host, path):       
+    def get_req(self, host, path):  
+        # http:// -7 chars
+        # netloc
+        # path begins w a / 
         if self.server in host : 
             # Add path to the visited_pages list
             visited_pages.append(path)
@@ -203,8 +206,11 @@ class Crawler:
             #   Add found links to fronteir  
             # Main Loop:
             #   Crawl to next page
-            self.get_req(self.server, fronteir[0])
-            fronteir.pop(0)
+            if fronteir[0][0] == "/" :
+                self.get_req(self.server, fronteir[0])
+                fronteir.pop(0)
+            else:
+                fronteir.pop(0)    
             print("FRONTEIR---------------------------\n", fronteir)
             print("VISITED---------------------------\n", visited_pages)
             #   Analyze - (add other found links and flags accordingly)
