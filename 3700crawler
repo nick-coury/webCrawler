@@ -143,14 +143,14 @@ class Crawler:
                 self.html_parser.feed(html_response)
                 done = True
             elif status == "302":
-                #print("HOST &&&& : ", host)
-                #print("LOCATION &&&&& : ", self.location)
                 html_response = split_response[1].decode()
                 self.html_parser.feed(html_response)
-                return self.get_req(host, self.location)
+                self.get_req(host, self.location)
+                done = True
             elif status == "403" or status == "404":
                 done = True
-            done = True
+            else:
+                raise Exception("Error Code Status: " + status)
 
         print(http_response)
         print(html_response)
