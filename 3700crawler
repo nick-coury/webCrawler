@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import argparse, socket, ssl
+import argparse, socket, ssl, sys
 from posixpath import split
 from ast import parse
 
@@ -224,15 +224,13 @@ class Crawler:
             #   If the schemes are different  
             #       Remove the bad url 
             if (parsed_url.netloc == host_server_netloc and parsed_url.scheme == host_server_scheme):
-                print("Visting... ", fronteir[0])
                 self.get_req(self.server, fronteir[0])
                 fronteir.pop(0)
             else:
-                print("removed bad url")
                 fronteir.pop(0)
         # Print out all flags
         for flag in flags:
-            print(flag + "\n")
+            sys.stdout.write(flag + "\n")
             
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='crawl Fakebook')
