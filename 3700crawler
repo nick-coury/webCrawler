@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 
 
 DEFAULT_SERVER = "project5.3700.network"
-DEFAULT_LOGIN = "/accounts/login/"
+DEFAULT_LOGIN = "/accounts/login/?next=/fakebook/"
 DEFAULT_PORT = 443
 
 # Nick's Login: 
@@ -198,11 +198,11 @@ class Crawler:
     def login(self):
         visited_pages.append("/accounts/logout/")
         # Send the original get request 
-        self.get_req(DEFAULT_SERVER, DEFAULT_LOGIN)
+        self.get_req(self.server, DEFAULT_LOGIN)
         # Make the payload (username, password, middleware token)
         payload = "username=%s&password=%s&%s&next=/fakebook/" % (self.username, self.password, middleware_token)
         # Post message a request 
-        self.post_req(DEFAULT_SERVER, DEFAULT_LOGIN, payload)
+        self.post_req(self.server, DEFAULT_LOGIN, payload)
     
     def run(self):      
         # Start by logging in
