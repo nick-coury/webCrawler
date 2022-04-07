@@ -153,8 +153,8 @@ class Crawler:
             else:
                 raise Exception("Error Code Status: " + status)
 
-        print(http_response)
-        print(html_response)
+        #print(http_response)
+        #print(html_response)
         
 # Should be: GET /fakebook/ HTTP/1.0
 # We got: HTTP/1.0SG: GET /fakebook/
@@ -176,18 +176,18 @@ class Crawler:
         #print("HOST: %s\n" % host)
 
         #self.get_cookie()
-        print("**\n")
+        #print("**\n")
         message = "GET "
-        print("message 1: %s\n" % message)
-        print("between 1 and 2-3\n")
+        # print("message 1: %s\n" % message)
+        # print("between 1 and 2-3\n")
         message += path + " HTTP/1.1\r\n"
         # print("message 2: %s" % message)
         # message += " HTTP/1.1\r\n"
-        print("message 2-3: %s\n" % message)
-        print("between 3 and 4\n")
+        # print("message 2-3: %s\n" % message)
+        # print("between 3 and 4\n")
         message += "Host: " + host + "\r\n"
-        print("message :4 %s\n" % message)
-        print("between 4 and 5\n")
+        # print("message :4 %s\n" % message)
+        # print("between 4 and 5\n")
         message += self.get_cookie() + "\r\n"
         print("message 5: %s\n" % message)
 
@@ -198,7 +198,7 @@ class Crawler:
         print("***\n")
         #print("THE GET MSG: %s" % message)
         #print("****\n")
-        self.send_and_handle(host, path, "GET /accounts/login/?next=/fakebook/ HTTP/1.1\r\nHost: project5.3700.network:443\r\n\r\n")
+        
     
     def post_req(self, host, path, payload):
         if path == "":
@@ -229,12 +229,12 @@ class Crawler:
     
     def run(self):      
         # Init the socket and wrap in SSL 
-        mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        context = ssl.SSLContext()
-        mysocket = context.wrap_socket(mysocket, server_hostname=self.server)
+        # mysocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # context = ssl.SSLContext()
+        # mysocket = context.wrap_socket(mysocket, server_hostname=self.server)
 
-        mysocket.connect((self.server, self.port))
-
+        # mysocket.connect((self.server, self.port))
+        
         self.login()
 
         # Start the crawl
