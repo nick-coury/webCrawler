@@ -198,6 +198,7 @@ class Crawler:
     def run(self):      
         # Start by logging in
         self.login()
+        
         # Start the crawl
         while len(flags) <= 5:
             # HTML Parser:
@@ -208,11 +209,19 @@ class Crawler:
             #   Crawl to next page
             parsed_url = urlparse(fronteir[0])
             print(parsed_url)
-            if fronteir[0][0] == "/" :
+
+
+            if parsed_url.netloc == "" or parsed_url.netloc == self.server:
                 self.get_req(self.server, fronteir[0])
                 fronteir.pop(0)
+            # elif(parsed_url.netloc == self.server):
+            #     self.get_req()
+            #     fronteir.pop(0)    
+            # elif(parsed_url.netloc != self.server):
+            #     fronteir.pop(0)
             else:
-                fronteir.pop(0)    
+                fronteir.pop(0)
+               
             #print("FRONTEIR---------------------------\n", fronteir)
             #print("VISITED---------------------------\n", visited_pages)
             #   Analyze - (add other found links and flags accordingly)
