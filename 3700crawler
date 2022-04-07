@@ -226,6 +226,7 @@ class Crawler:
         # Start the crawl
         found_flags = 0
         while found_flags != 5:
+            return
             
 
 
