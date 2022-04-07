@@ -173,7 +173,7 @@ class Crawler:
             # netloc is the root url  
             # original URL: "scheme://netloc/path;parameters?query#fragment"
                     
-            message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.get_cookie())
+            message = "GET %s HTTP/1.1\r\nHost: %s\r\n%s\r\n" % (path, host, self.get_cookie())
             self.send_and_handle(host, path, message)
 
     
