@@ -195,16 +195,10 @@ class Crawler:
         payload = "username=%s&password=%s&%s&next=/fakebook/" % (self.username, self.password, middleware_token)
         # Post message a request 
         self.post_req(DEFAULT_SERVER, DEFAULT_LOGIN, payload)
+        visited_pages.append("/accounts/logout/")
     
     def run(self):      
         # Start by logging in
-        mylist = ["aa", "aaaaaaa"]
-        mybool = "aa" in mylist
-        print(mybool)
-        mylist.pop(0)
-        mybool = "aa" in mylist
-        print(mybool)
-
 
         self.login()
         
