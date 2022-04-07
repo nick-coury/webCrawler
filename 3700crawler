@@ -202,6 +202,7 @@ class Crawler:
         mybool = "aa" in mylist
         print(mybool)
         mylist.pop(0)
+        mybool = "aa" in mylist
         print(mybool)
 
 
