@@ -212,6 +212,8 @@ class Crawler:
 
 
             if parsed_url.netloc == "" or parsed_url.netloc == self.server:
+                print("case 1: " + parsed_url.netloc == "")
+                print("case 2: " + parsed_url.netloc == self.server)
                 self.get_req(self.server, fronteir[0])
                 fronteir.pop(0)
             # elif(parsed_url.netloc == self.server):
@@ -220,6 +222,7 @@ class Crawler:
             # elif(parsed_url.netloc != self.server):
             #     fronteir.pop(0)
             else:
+                print("removed bad url")
                 fronteir.pop(0)
                
             #print("FRONTEIR---------------------------\n", fronteir)
