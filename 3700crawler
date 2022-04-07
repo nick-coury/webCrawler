@@ -234,8 +234,8 @@ class Crawler:
         # mysocket = context.wrap_socket(mysocket, server_hostname=self.server)
 
         # mysocket.connect((self.server, self.port))
-        
-        self.login()
+        self.send_and_handle(host, path, "GET /accounts/login/?next=/fakebook/ HTTP/1.1\r\nHost: project5.3700.network:443\r\n\r\n")
+        #self.login()
 
         # Start the crawl
 
