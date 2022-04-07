@@ -143,8 +143,9 @@ class Crawler:
                 self.html_parser.feed(html_response)
                 done = True
             elif status == "302":
-                html_response = split_response[1].decode()
-                self.html_parser.feed(html_response)
+                #print("HTNL RESPONSE ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^")
+                #html_response = split_response[1].decode()
+                #self.html_parser.feed(html_response)
                 self.get_req(host, self.location)
                 done = True
             elif status == "403" or status == "404":
