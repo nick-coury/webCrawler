@@ -105,7 +105,7 @@ class Crawler:
                         self.sessionid = part[0:len(part) - 1]  
             elif "Location" in header:
                 split_location = header.split(" ")
-                self.location = split_location[1][0: len(split_location[1] - 2)]  
+                self.location = split_location[1][0: len(split_location[1]) - 2]
         
         print("CSRF ", self.csrf)
         print("COOKIES ", self.get_cookie())
