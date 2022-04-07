@@ -180,8 +180,8 @@ class Crawler:
         message = "GET "
         # print("message 1: %s\n" % message)
         # print("between 1 and 2-3\n")
-        print("PATH: %s" % path)
-        message += str(path) + " HTTP/1.1\r\n"
+        #print("PATH: %s" % path)
+        message += str(path) + "\n HTTP/1.1\r\n"
         # print("message 2: %s" % message)
         # message += " HTTP/1.1\r\n"
         # print("message 2-3: %s\n" % message)
