@@ -209,7 +209,6 @@ class Crawler:
             print("VISITED---------------------------\n", visited_pages)
             #   Analyze - (add other found links and flags accordingly)
             #   Add to visited, remove from frontier
-            return
             
 
 
