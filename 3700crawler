@@ -153,36 +153,38 @@ class Crawler:
         
   
     def get_req(self, host, path):       
-        # Add path to the visited_pages list
-        visited_pages.append(path)
-        # Checking if this is the root of the Host
-        if(path == ""):
-            path = "/" 
+        if self.server in host : 
+            # Add path to the visited_pages list
+            visited_pages.append(path)
+            # Checking if this is the root of the Host
+            if(path == ""):
+                path = "/" 
 
-        # netloc is the root url  
-        # original URL: "scheme://netloc/path;parameters?query#fragment"
-                
-        message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.get_cookie())
-        self.send_and_handle(host, path, message)
+            # netloc is the root url  
+            # original URL: "scheme://netloc/path;parameters?query#fragment"
+                    
+            message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.get_cookie())
+            self.send_and_handle(host, path, message)
 
     def post_req(self, host, path, payload):
-        if path == "":
-            path = "/"
-        
-        post_msg = ""
+        if self.server in host:
+            if path == "":
+                path = "/"
+            
+            post_msg = ""
 
-        # Add the header to the post message 
-        post_msg += "POST %s HTTP/1.1\r\n" % path
-        post_msg += "Host: %s\r\n" % host
-        # Add the content length field representing the length of the payload 
-        post_msg += "Content-Length: %s\r\n" % str(len(payload)) 
-        # Add the content type (always application/x-www-form-urlencoded ?)
-        post_msg += "Content-Type: application/x-www-form-urlencoded\r\n"
-        # Add the cookie 
-        post_msg += self.get_cookie() + "\r\n"
-        # Add the data 
-        post_msg += payload 
-        self.send_and_handle(host, path, post_msg)        
+            # Add the header to the post message 
+            post_msg += "POST %s HTTP/1.1\r\n" % path
+            post_msg += "Host: %s\r\n" % host
+            # Add the content length field representing the length of the payload 
+            post_msg += "Content-Length: %s\r\n" % str(len(payload)) 
+            # Add the content type (always application/x-www-form-urlencoded ?)
+            post_msg += "Content-Type: application/x-www-form-urlencoded\r\n"
+            # Add the cookie 
+            post_msg += self.get_cookie() + "\r\n"
+            # Add the data 
+            post_msg += payload 
+            self.send_and_handle(host, path, post_msg)        
 
     def login(self):
         # Send the original get request 
