@@ -213,7 +213,7 @@ class Crawler:
             # Main Loop:
             #   Crawl to next page
             parsed_url = urlparse(fronteir[0])
-            print(parsed_url)
+            #print(parsed_url)
 
             # Check if the domain of the current url is the same as the given domain 
             #   If both the scheme and netloc are the same
@@ -225,17 +225,6 @@ class Crawler:
             if (parsed_url.netloc == host_server_netloc and parsed_url.scheme == host_server_scheme):
                 self.get_req(self.server, fronteir[0])
                 fronteir.pop(0)
-
-            # if parsed_url.netloc == "" or parsed_url.netloc == self.server:
-            #     print("case 1: " + parsed_url.netloc == "")
-            #     print("case 2: " + parsed_url.netloc == self.server)
-            #     self.get_req(self.server, fronteir[0])
-            #     fronteir.pop(0)
-            # elif(parsed_url.netloc == self.server):
-            #     self.get_req()
-            #     fronteir.pop(0)    
-            # elif(parsed_url.netloc != self.server):
-            #     fronteir.pop(0)
             else:
                 print("removed bad url")
                 fronteir.pop(0)
@@ -244,6 +233,7 @@ class Crawler:
             #print("VISITED---------------------------\n", visited_pages)
             #   Analyze - (add other found links and flags accordingly)
             #   Add to visited, remove from frontier
+        print("VISITED---------------------------\n", visited_pages)
             
 
 
