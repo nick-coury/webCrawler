@@ -206,13 +206,15 @@ class Crawler:
             #   Add found links to fronteir  
             # Main Loop:
             #   Crawl to next page
+            parsed_url = urlparse(fronteir[0])
+            print(parsed_url)
             if fronteir[0][0] == "/" :
                 self.get_req(self.server, fronteir[0])
                 fronteir.pop(0)
             else:
                 fronteir.pop(0)    
-            print("FRONTEIR---------------------------\n", fronteir)
-            print("VISITED---------------------------\n", visited_pages)
+            #print("FRONTEIR---------------------------\n", fronteir)
+            #print("VISITED---------------------------\n", visited_pages)
             #   Analyze - (add other found links and flags accordingly)
             #   Add to visited, remove from frontier
             
