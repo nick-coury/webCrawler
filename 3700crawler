@@ -34,7 +34,7 @@ class MyHTMLParser(HTMLParser):
             # attr -> (name, value) -> (href, link)
                 if (attr[0] == "href" and attr[1] not in fronteir and attr[1] not in visited_pages):
                     fronteir.append(attr[1])
-                    print("ADDING " + str(attr[1]) + " TO FRONTEIR")
+                    #print("ADDING " + str(attr[1]) + " TO FRONTEIR")
 
         # Example tag for middleware token:       
         # <input type="hidden" name="csrfmiddlewaretoken" value="sP02rxK0K6gHIn4j8X2gmE77wa10WJPJjctTWZ65Xq79I6yxfSLO0kW95zvjykT8">
@@ -45,6 +45,12 @@ class MyHTMLParser(HTMLParser):
                 if(attr[1] == "csrfmiddlewaretoken"):
                     middleware_token = "csrfmiddlewaretoken=" + attrs[2][1]
                     break
+    def handle_data(self, data):
+        #<h3>FLAG: 64chars</h3>
+        if "FLAG: " in data:
+            print( '=========================================Found Flag===================================================')
+            print(data[6:])
+            flags.append(data[6:])
 
 
 class Crawler:
