@@ -198,6 +198,13 @@ class Crawler:
     
     def run(self):      
         # Start by logging in
+        mylist = ["aa", "aaaaaaa"]
+        mybool = "aa" in mylist
+        print(mybool)
+        mylist.pop(0)
+        print(mybool)
+
+
         self.login()
         
         host_server = urlparse(self.server)
