@@ -48,6 +48,7 @@ class MyHTMLParser(HTMLParser):
     # Handles the finding of flags and adds it to our flags list
     def handle_data(self, data):
         if "FLAG: " in data:
+            print("----------------------------FLAG----------------------------\n")
             flags.append(data[6:])
 
 
