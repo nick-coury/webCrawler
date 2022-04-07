@@ -205,7 +205,7 @@ class Crawler:
         host_server_netloc = host_server.netloc
 
         # Start the crawl
-        while len(flags) <= 5:
+        while len(flags) <= 5 and len(fronteir) != 0:
             # HTML Parser:
             #   Look for links and flags on current page 
             #   Add found flags to flag list 
