@@ -106,32 +106,31 @@ class Crawler:
             elif "Location" in header:
                 split_location = header.split(" ")
                 self.location = split_location[1][0: len(split_location[1]) - 1]
-        
-        print("CSRF ", self.csrf)
-        print("COOKIES ", self.get_cookie())
-
         return status
 
+    # Sends a formatted message and processes the response given by the server
     def send_and_handle(self, host, path, message):
-        done = False
-        while not done:  
+        while True:  
+            # Wrap the socket in ssl 
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             context = ssl.SSLContext()
             sock = context.wrap_socket(sock, server_hostname=self.server)
 
+            # Connect to the server @ port
             sock.connect((self.server, self.port))
             
             # Sending the GET request over the previously wrapped socket 
-            print("SENDING MESSAGE 11111111111111111111 \n", message)
             sock.send(message.encode())
+            
             # Recieve a Message
             data = sock.recv(100000)
+            
+            # Once a response was received, close the socket 
             sock.shutdown(1)
             sock.close()
-            # print("######## ", data)
+            
             # Split here into HTTP and HTML responses
             split_response = data.split(b"\r\n\r\n\n\n\n")
-            # print("$$$$$$$$ ", split_response)
             http_response = split_response[0].decode()
 
             # Feed the data to our parser based on the status code
@@ -141,21 +140,19 @@ class Crawler:
             if status == "200":
                 html_response = split_response[1].decode()
                 self.html_parser.feed(html_response)
-                done = True
+                break
             elif status == "302":
                 self.get_req(host, self.location)
-                done = True
+                break
             elif status == "403" or status == "404":
-                done = True
+                break
+            elif status == "500":
+                continue
             else:
                 raise Exception("Error Code Status: " + status)
-        
-# Should be: GET /fakebook/ HTTP/1.0
-# We got: HTTP/1.0SG: GET /fakebook/
-# Host: project5.3700.network
-# Cookie: csrftoken=gIk4kgWJEvQRT5a9HRWB0hPEWs23oiUvvztIRkIQZAb9gYPmigKzXgmNx7Cvvszl; sessionid=nchuhnhn0o0r4s6u79necalesjadrfnn
 
-    
+        
+  
     def get_req(self, host, path):       
         # Add path to the visited_pages list
         visited_pages.append(path)
@@ -165,34 +162,10 @@ class Crawler:
 
         # netloc is the root url  
         # original URL: "scheme://netloc/path;parameters?query#fragment"
-        #print("HOST: %s\n" % host)
-
-        
-        # message = "GET "
-        # message += str(path) + " HTTP/1.1\r\n"
-        # # print("message 2: %s" % message)
-        # # message += " HTTP/1.1\r\n"
-        # # print("message 2-3: %s\n" % message)
-        # # print("between 3 and 4\n")
-        # message += "Host: " + str(host) + "\r\n"
-        # # print("message :4 %s\n" % message)
-        # # print("between 4 and 5\n")
-        # message += str(self.get_cookie()) + "\r\n"
-        
+                
         message = "GET %s HTTP/1.0\r\nHost: %s\r\n%s\r\n" % (path, host, self.get_cookie())
         self.send_and_handle(host, path, message)
 
-        
-        #print("message: %s" % message)
-        #print("Path: ", path)
-        #print("Host: ", host)
-        #print("***\n")
-        #print("THE GET MSG: %s" % message)
-        #print("****\n")
-        
-        
-        
-    
     def post_req(self, host, path, payload):
         if path == "":
             path = "/"
