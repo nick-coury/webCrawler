@@ -34,6 +34,7 @@ class MyHTMLParser(HTMLParser):
             # attr -> (name, value) -> (href, link)
                 if (attr[0] == "href" and attr[1] not in fronteir and attr[1] not in visited_pages):
                     fronteir.append(attr[1])
+                    print("ADDING " + str(attr[1]) + " TO FRONTEIR")
 
         # Example tag for middleware token:       
         # <input type="hidden" name="csrfmiddlewaretoken" value="sP02rxK0K6gHIn4j8X2gmE77wa10WJPJjctTWZ65Xq79I6yxfSLO0kW95zvjykT8">
@@ -199,6 +200,10 @@ class Crawler:
         # Start by logging in
         self.login()
         
+        host_server = urlparse(self.server)
+        host_server_scheme = host_server.scheme
+        host_server_netloc = host_server.netloc
+
         # Start the crawl
         while len(flags) <= 5:
             # HTML Parser:
@@ -210,12 +215,22 @@ class Crawler:
             parsed_url = urlparse(fronteir[0])
             print(parsed_url)
 
-
-            if parsed_url.netloc == "" or parsed_url.netloc == self.server:
-                print("case 1: " + parsed_url.netloc == "")
-                print("case 2: " + parsed_url.netloc == self.server)
+            # Check if the domain of the current url is the same as the given domain 
+            #   If both the scheme and netloc are the same
+            #       If they are, then send a GET 
+            #   If only the scheme is the same but different netloc's 
+            #       Remove the bad url 
+            #   If the schemes are different  
+            #       Remove the bad url 
+            if (parsed_url.netloc == host_server_netloc and parsed_url.scheme == host_server_scheme):
                 self.get_req(self.server, fronteir[0])
                 fronteir.pop(0)
+
+            # if parsed_url.netloc == "" or parsed_url.netloc == self.server:
+            #     print("case 1: " + parsed_url.netloc == "")
+            #     print("case 2: " + parsed_url.netloc == self.server)
+            #     self.get_req(self.server, fronteir[0])
+            #     fronteir.pop(0)
             # elif(parsed_url.netloc == self.server):
             #     self.get_req()
             #     fronteir.pop(0)    
