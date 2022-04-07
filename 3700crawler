@@ -178,10 +178,10 @@ class Crawler:
         #self.get_cookie()
         print("**\n")
         message = "GET "
-        print("message 1: %s" % message)
-        message += path 
-        print("message 2: %s" % message)
-        message += " HTTP/1.1\r\n"
+        print("message 1-2: %s" % message)
+        message += path + " HTTP/1.1\r\n"
+        # print("message 2: %s" % message)
+        # message += " HTTP/1.1\r\n"
         print("message 3: %s" % message)
         message += "Host: " + host + "\r\n"
         print("message :4 %s" % message)
